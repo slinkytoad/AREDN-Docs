@@ -22,5 +22,9 @@ From here you need to request the cert for the server. Certbot can configure NGI
 - you will want to run the following to allow certbot to stop nginx and reload nginx before and after renewing the cert.
 
 ```bash
-block for that code
+echo -e '#!/bin/bash\nnginx -t && systemctl stop nginx' | sudo tee /etc/letsencrypt/renewal-hooks/pre/nginx-stop.sh
+echo -e '#!/bin/bash\nnginx -t && systemctl start nginx' | sudo tee /etc/letsencrypt/renewal-hooks/post/nginx-start.sh
+
+sudo chmod a+x /etc/letsencrypt/renewal-hooks/pre/nginx-stop.sh
+sudo chmod a+x /etc/letsencrypt/renewal-hooks/post/nginx-start.sh
 ```
